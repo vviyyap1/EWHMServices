@@ -1,4 +1,4 @@
-package com.elasticwave.utils.jsondeserializer;
+package com.elasticwave.hotelmgmt.services.account.revenue.query.util;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,11 +21,10 @@ public class DateDeserializerDdSlashMmSlashYyyy extends StdDeserializer<Date> {
     }
     @Override
     public Date deserialize(JsonParser jsonParser, DeserializationContext
-            deserializationContext) throws IOException, JsonProcessingException {
+            deserializationContext) throws IOException {
         String dateStr = jsonParser.getText();
         try {
-            Date date = simpleDateFormat.parse(dateStr);
-            return date;
+            return simpleDateFormat.parse(dateStr);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

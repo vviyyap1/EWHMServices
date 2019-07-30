@@ -1,7 +1,8 @@
 HELP.md
 target/
-!**/src/main/**
+!**/src/main/java/**
 !**/src/test/**
+MANIFEST.MF
 .mvn/
 
 ### STS ###
@@ -41,7 +42,6 @@ build/
 .recommenders
 /build
 /code
-MANIFEST.MF
 _site/
 activemq-data
 bin
