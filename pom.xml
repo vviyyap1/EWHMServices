@@ -21,9 +21,9 @@
 
 	<modules>
 		<module>GatewayService</module>
+		<module>EurekaDiscoveryService</module>
 		<module>Account/RevenueQueryService</module>
 		<module>Account/RevenueCommandService</module>
-		<module>CommonUtils</module>
 	</modules>
 
 	<build>

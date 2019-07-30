@@ -10,12 +10,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 
 import java.io.InputStream;
 import java.util.List;
 
 @SpringBootApplication
+@EnableEurekaClient
 public class RevenueCommandServiceApplication {
 
 	@Bean
@@ -25,7 +27,7 @@ public class RevenueCommandServiceApplication {
 			categoryRepository.deleteAll();
 
 			ObjectMapper mapper = new ObjectMapper();
-			TypeReference<List<RevenueCategory>> typeReference = new TypeReference<List<RevenueCategory>>(){};
+			TypeReference<List<RevenueCategory>> typeReference = new TypeReference<>(){};
 			InputStream inputStream = TypeReference.class.getResourceAsStream("/static/revenuecategories.json");
 
 			try{
@@ -36,7 +38,7 @@ public class RevenueCommandServiceApplication {
 			}
 
 			dailyHotelRevenueRepository.deleteAll();
-			TypeReference<List<DailyHotelRevenue>> hotelRevenueTypeReference = new TypeReference<List<DailyHotelRevenue>>(){};
+			TypeReference<List<DailyHotelRevenue>> hotelRevenueTypeReference = new TypeReference<>(){};
 			inputStream = TypeReference.class.getResourceAsStream("/static/revenuecategories3.json");
 
 			try{

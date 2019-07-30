@@ -1,6 +1,6 @@
 package com.elasticwave.hotelmgmt.services.account.revenue.command.domain;
 
-import com.elasticwave.utils.jsondeserializer.DateDeserializerDdSlashMmSlashYyyy;
+import com.elasticwave.hotelmgmt.services.account.revenue.command.util.DateDeserializerDdSlashMmSlashYyyy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
