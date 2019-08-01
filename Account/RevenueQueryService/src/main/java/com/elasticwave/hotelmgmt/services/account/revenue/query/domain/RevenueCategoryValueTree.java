@@ -29,7 +29,7 @@ public class RevenueCategoryValueTree {
         this.order = category.getOrder();
         this.isLeaf = category.getIsLeaf();
         this.parentId = category.getParentId();
-        this.optionsTypeAheadSearch.addAll(setOptionsTypeAheadSearch(category.getOptions()));
+        this.optionsTypeAheadSearch = setOptionsTypeAheadSearch(category.getOptions());
     }
 
     private Set<String> setOptionsTypeAheadSearch (List<RevenueCategoryOption> options){
@@ -49,7 +49,10 @@ public class RevenueCategoryValueTree {
             Set<String> newTypeAheadOptions = revenueCategoryValue.getOptions().stream()
                     .map(RevenueCategoryValueOption::getName)
                     .collect(Collectors.toSet());
-            this.optionsTypeAheadSearch.addAll(newTypeAheadOptions);
+            if (optionsTypeAheadSearch == null)
+                optionsTypeAheadSearch = newTypeAheadOptions;
+            else
+                optionsTypeAheadSearch.addAll(newTypeAheadOptions);
         }
     }
 

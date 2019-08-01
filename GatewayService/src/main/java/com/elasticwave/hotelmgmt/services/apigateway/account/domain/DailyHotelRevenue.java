@@ -15,8 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 public class DailyHotelRevenue {
     private String hotelId;
-
-    @JsonDeserialize(using = DateDeserializerDdSlashMmSlashYyyy.class)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date date;
     private List<RevenueCategoryValue> categoriesRevenue;
