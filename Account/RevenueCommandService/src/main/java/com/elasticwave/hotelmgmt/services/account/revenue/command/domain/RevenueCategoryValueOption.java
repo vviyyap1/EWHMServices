@@ -10,8 +10,4 @@ import lombok.NoArgsConstructor;
 public class RevenueCategoryValueOption {
     private String name;
     private Double revenue;
-
-    public RevenueCategoryValueOption(RevenueCategoryOption option){
-        this.name = option.getName();
-    }
 }

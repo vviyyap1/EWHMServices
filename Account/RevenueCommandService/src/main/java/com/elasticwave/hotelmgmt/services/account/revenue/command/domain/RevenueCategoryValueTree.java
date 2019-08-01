@@ -31,18 +31,16 @@ public class RevenueCategoryValueTree {
         this.order = category.getOrder();
         this.isLeaf = category.getIsLeaf();
         this.parentId = category.getParentId();
-        this.optionsTypeAheadSearch = setOptionsTypeAheadSearch(category.getOptions());
+        this.optionsTypeAheadSearch.addAll(setOptionsTypeAheadSearch(category.getOptions()));
     }
 
     private Set<String> setOptionsTypeAheadSearch (List<RevenueCategoryOption> options){
         if(options == null)
             return null;
 
-        Set<String> optionValues = options.stream()
+        return options.stream()
                 .map(RevenueCategoryOption::getName)
                 .collect(Collectors.toSet());
-
-        return optionValues;
     }
 
 
@@ -59,19 +57,19 @@ public class RevenueCategoryValueTree {
 
     public void addChild(RevenueCategoryValueTree child) {
         if(this.children == null)
-            this.children = new ArrayList<RevenueCategoryValueTree>();
+            this.children = new ArrayList<>();
         if (!this.children.contains(child) && child != null)
             this.children.add(child);
     }
 
     public Stream<RevenueCategoryValueTree> flattenedLeafNodes() {
         if(this.children != null) {
-            if (this.isLeaf == true)
+            if (this.isLeaf)
                 return Stream.concat(Stream.of(this), children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes));
             else
                 return children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes);
         }else{
-            if(this.isLeaf == true)
+            if(this.isLeaf)
                 return Stream.of(this);
             else
                 return null;

@@ -16,28 +16,26 @@ import java.util.Date;
 @RequestMapping("/api/account/revenue")
 public class RevenueController {
     @Autowired
-    RevenueService service;
+    private RevenueService service;
 
     @GetMapping("/dailyRevenue/{hotelId}/on/{dateStr}")
-    public DailyHotelRevenue getDailyRevenue(@PathVariable String hotelId, @PathVariable String dateStr){
+    public Object getDailyRevenue(@PathVariable String hotelId, @PathVariable String dateStr){
         try {
             Date date = new SimpleDateFormat("MM-dd-yyyy").parse(dateStr);
             return service.getDailyRevenue(hotelId, date);
         }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            return e.getMessage();
         }
     }
 
     @GetMapping("/dailyRevenue/{hotelId}/from/{fromStr}/to/{toStr}")
-    public HotelRevenue getHotelRevenue(@PathVariable String hotelId, @PathVariable String fromStr, @PathVariable String toStr){
+    public Object getHotelRevenue(@PathVariable String hotelId, @PathVariable String fromStr, @PathVariable String toStr){
         try {
             Date from = new SimpleDateFormat("MM-dd-yyyy").parse(fromStr);
             Date to = new SimpleDateFormat("MM-dd-yyyy").parse(toStr);
             return service.getRevenue(hotelId, from, to);
         }catch(Exception e){
-            System.out.println(e.getMessage());
-            return null;
+            return e.getMessage();
         }
     }
 }

@@ -3,7 +3,6 @@ package com.elasticwave.hotelmgmt.services.apigateway.account.service;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.HotelRevenue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -22,5 +21,11 @@ public class RevenueServiceImpl implements RevenueService {
     @Override
     public HotelRevenue getRevenue(String hotelId, String fromStr, String toStr) {
         return restTemplate.getForObject("http://revenuequeryservice/api/account/revenue/dailyRevenue/"+hotelId+"/from/"+fromStr+"/to/"+toStr, HotelRevenue.class);
+    }
+
+    @Override
+    public String saveDailyHotelRevenue(DailyHotelRevenue dailyHotelRevenue) {
+        final String baseUrl = "http://revenuecommandservice/api/account/revenue/saveDailyHotelRevenue";
+        return restTemplate.postForObject(baseUrl, dailyHotelRevenue, String.class);
     }
 }

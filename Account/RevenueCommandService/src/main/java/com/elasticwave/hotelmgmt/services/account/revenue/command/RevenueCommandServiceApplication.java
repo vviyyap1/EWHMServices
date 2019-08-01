@@ -37,7 +37,7 @@ public class RevenueCommandServiceApplication {
 				System.out.println("Unable to Save Categories:" + e.getMessage());
 			}
 
-			dailyHotelRevenueRepository.deleteAll();
+			/*dailyHotelRevenueRepository.deleteAll();
 			TypeReference<List<DailyHotelRevenue>> hotelRevenueTypeReference = new TypeReference<>(){};
 			inputStream = TypeReference.class.getResourceAsStream("/static/revenuecategories3.json");
 
@@ -48,7 +48,7 @@ public class RevenueCommandServiceApplication {
 
 			}catch (Exception e){
 				System.out.println("Unable to Save Categories:" + e.getMessage());
-			}
+			}*/
 		};
 	}
 

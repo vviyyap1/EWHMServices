@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 
 public interface RevenueService {
 
-    public DailyHotelRevenue getDailyRevenue(String hotelId, Date date);
+    DailyHotelRevenue getDailyRevenue(String hotelId, Date date);
 
-    public HotelRevenue getRevenue(String hotelId, Date from, Date to);
+    HotelRevenue getRevenue(String hotelId, Date from, Date to);
 
     static RevenueCategoryValueTree assembleTree(final List<RevenueCategory> categories, final List<RevenueCategoryValue> values, final String rootNodeId){
         final List<RevenueCategoryValueTree> valueTree = RevenueService.buildCategoriesValueTreeList(categories,values);
@@ -28,11 +28,6 @@ public interface RevenueService {
                 });
 
         return mapTmp.get(rootNodeId);
-    }
-
-    static List<RevenueCategoryValue> flattenTree(final RevenueCategoryValueTree revenueCategoryValueTree){
-        return revenueCategoryValueTree.flattenedLeafNodes().map(RevenueCategoryValue::new)
-                .collect(Collectors.toList());
     }
 
     static List<RevenueCategoryValueTree> buildCategoriesValueTreeList (final List<RevenueCategory> categories, final List<RevenueCategoryValue> values){

@@ -17,9 +17,4 @@ public class RevenueCategoryValue {
 
     private List<RevenueCategoryValueOption> options;
 
-    public RevenueCategoryValue(RevenueCategoryValueTree revenueCategoryValueTree){
-        this.categoryId = revenueCategoryValueTree.getCategoryId();
-        this.revenue = revenueCategoryValueTree.getRevenue();
-        this.options = revenueCategoryValueTree.getOptions();
-    }
 }
