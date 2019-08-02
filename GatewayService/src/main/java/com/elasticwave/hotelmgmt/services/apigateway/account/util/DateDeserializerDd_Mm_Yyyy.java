@@ -9,13 +9,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateDeserializerDdSlashMmSlashYyyy extends StdDeserializer<Date> {
+public class DateDeserializerDd_Mm_Yyyy extends StdDeserializer<Date> {
     private static SimpleDateFormat simpleDateFormat =
-            new SimpleDateFormat("MM/dd/yyyy");
-    public DateDeserializerDdSlashMmSlashYyyy(){
+            new SimpleDateFormat("MM-dd-yyyy");
+    public DateDeserializerDd_Mm_Yyyy(){
         this(null);
     }
-    public DateDeserializerDdSlashMmSlashYyyy(Class<?> c){
+    public DateDeserializerDd_Mm_Yyyy(Class<?> c){
         super(c);
     }
     @Override

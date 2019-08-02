@@ -21,13 +21,6 @@ public class RevenueCategoryTree {
     private List<RevenueCategoryOption> options;
     private List<RevenueCategoryTree> children;
 
-    public void addChild(RevenueCategoryTree child) {
-        if(this.children == null)
-            this.children = new ArrayList<>();
-        if (!this.children.contains(child) && child != null)
-            this.children.add(child);
-    }
-
     public Stream<RevenueCategoryTree> flattenedNodes() {
         if(this.children != null) {
                 return Stream.concat(Stream.of(this), children.stream().flatMap(RevenueCategoryTree::flattenedNodes));

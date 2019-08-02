@@ -26,12 +26,4 @@ public class RevenueCategoryTree {
         if (!this.children.contains(child) && child != null)
             this.children.add(child);
     }
-
-    private Stream<RevenueCategoryTree> flattenedNodes() {
-        if(this.children != null) {
-                return Stream.concat(Stream.of(this), children.stream().flatMap(RevenueCategoryTree::flattenedNodes));
-        }else{
-                return Stream.of(this);
-        }
-    }
 }

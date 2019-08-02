@@ -1,7 +1,5 @@
 package com.elasticwave.hotelmgmt.services.account.revenue.query.controller;
 
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.DailyHotelRevenue;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.HotelRevenue;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.service.RevenueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

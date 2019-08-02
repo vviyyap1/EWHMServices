@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RevenueServiceImpl implements RevenueService {
@@ -28,6 +29,11 @@ public class RevenueServiceImpl implements RevenueService {
                     if (x.getCategoriesRevenueTree() != null) {
                         x.setCategoriesRevenue(RevenueService.flattenRevenueCategoryValueTree(x.getCategoriesRevenueTree()));
                         x.setCategoriesRevenueTree(null);
+                    }else{
+                        //remove any null or 0 revenue
+                       x.setCategoriesRevenue(x.getCategoriesRevenue().stream()
+                                .filter(a -> a.getRevenue() > 0.0)
+                                .collect(Collectors.toList()));
                     }
                 });
         hotelRevenueRepository.saveAll(dailyHotelRevenues);

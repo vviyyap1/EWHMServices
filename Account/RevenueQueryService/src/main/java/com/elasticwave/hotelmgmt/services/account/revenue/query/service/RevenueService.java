@@ -23,8 +23,12 @@ public interface RevenueService {
         // Loop and assign parent/child relationships
         valueTree.stream()
                 .forEach(x->{
-                    if(mapTmp.get(x.getParentId())!=null)
-                        mapTmp.get(x.getParentId()).addChild(x);
+                    RevenueCategoryValueTree parentTree = mapTmp.get(x.getParentId());
+                    if(parentTree!=null) {
+                        //show aggregated revenue for parent
+                        parentTree.addRevenue(mapTmp,x.getRevenue());
+                        parentTree.addChild(x);
+                    }
                 });
 
         return mapTmp.get(rootNodeId);

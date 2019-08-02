@@ -25,51 +25,15 @@ public class RevenueCategoryValueTree {
     private Set<String> optionsTypeAheadSearch;
     private List<RevenueCategoryValueTree> children;
 
-    public RevenueCategoryValueTree(RevenueCategory category){
-        this.categoryId = category.getCategoryId();
-        this.name = category.getName();
-        this.order = category.getOrder();
-        this.isLeaf = category.getIsLeaf();
-        this.parentId = category.getParentId();
-        this.optionsTypeAheadSearch.addAll(setOptionsTypeAheadSearch(category.getOptions()));
-    }
-
-    private Set<String> setOptionsTypeAheadSearch (List<RevenueCategoryOption> options){
-        if(options == null)
-            return null;
-
-        return options.stream()
-                .map(RevenueCategoryOption::getName)
-                .collect(Collectors.toSet());
-    }
-
-
-    public void copyRevenueCategoryValue(RevenueCategoryValue revenueCategoryValue){
-        this.revenue = revenueCategoryValue.getRevenue();
-        if(revenueCategoryValue.getOptions() != null) {
-            this.options = revenueCategoryValue.getOptions();
-            Set<String> newTypeAheadOptions = revenueCategoryValue.getOptions().stream()
-                    .map(RevenueCategoryValueOption::getName)
-                    .collect(Collectors.toSet());
-            this.optionsTypeAheadSearch.addAll(newTypeAheadOptions);
-        }
-    }
-
-    public void addChild(RevenueCategoryValueTree child) {
-        if(this.children == null)
-            this.children = new ArrayList<>();
-        if (!this.children.contains(child) && child != null)
-            this.children.add(child);
-    }
-
     public Stream<RevenueCategoryValueTree> flattenedLeafNodes() {
+        //only collect leaf nodes that has revenue. No need to save anything else
         if(this.children != null) {
-            if (this.isLeaf)
+            if (this.isLeaf && this.revenue != null && !this.revenue.equals(0.0))
                 return Stream.concat(Stream.of(this), children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes));
             else
                 return children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes);
         }else{
-            if(this.isLeaf)
+            if(this.isLeaf && this.revenue != null && !this.revenue.equals(0.0))
                 return Stream.of(this);
             else
                 return null;

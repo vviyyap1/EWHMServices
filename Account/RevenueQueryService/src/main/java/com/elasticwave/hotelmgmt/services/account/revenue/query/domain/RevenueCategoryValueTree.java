@@ -29,7 +29,15 @@ public class RevenueCategoryValueTree {
         this.order = category.getOrder();
         this.isLeaf = category.getIsLeaf();
         this.parentId = category.getParentId();
+        this.revenue = 0.0;
         this.optionsTypeAheadSearch = setOptionsTypeAheadSearch(category.getOptions());
+    }
+
+    public void addChild(RevenueCategoryValueTree child) {
+        if(this.children == null)
+            this.children = new ArrayList<>();
+        if (!this.children.contains(child) && child != null)
+            this.children.add(child);
     }
 
     private Set<String> setOptionsTypeAheadSearch (List<RevenueCategoryOption> options){
@@ -56,24 +64,10 @@ public class RevenueCategoryValueTree {
         }
     }
 
-    public void addChild(RevenueCategoryValueTree child) {
-        if(this.children == null)
-            this.children = new ArrayList<>();
-        if (!this.children.contains(child) && child != null)
-            this.children.add(child);
-    }
+    public void addRevenue(Map<String,RevenueCategoryValueTree> mapTmp, Double revenue){
+        this.setRevenue(this.getRevenue()+revenue);
+        if(mapTmp.get(this.getParentId()) != null)
+            mapTmp.get(this.getParentId()).addRevenue(mapTmp, revenue);
 
-    public Stream<RevenueCategoryValueTree> flattenedLeafNodes() {
-        if(this.children != null) {
-            if (this.isLeaf)
-                return Stream.concat(Stream.of(this), children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes));
-            else
-                return children.stream().flatMap(RevenueCategoryValueTree::flattenedLeafNodes);
-        }else{
-            if(this.isLeaf)
-                return Stream.of(this);
-            else
-                return null;
-        }
     }
 }

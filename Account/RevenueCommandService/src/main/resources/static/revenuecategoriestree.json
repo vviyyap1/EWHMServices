@@ -1,0 +1,65 @@
+{
+  "categoryId": "0",
+  "name": "Revenue Categories",
+  "order": 10,
+  "isLeaf": "false",
+  "parentId": "-1",
+  "options": [],
+  "children":[{
+    "categoryId": "1",
+    "name": "Room Revenue",
+    "order": 10,
+    "isLeaf": "false",
+    "parentId": "0",
+    "options": [],
+    "children":[{
+      "categoryId": "1.1",
+      "name": "3rd Party And Internet Revenue",
+      "order": 10,
+      "isLeaf": "true",
+      "parentId": "1",
+      "options": [{
+        "name":"Expedia.com"
+      },{
+        "name": "Booking.com"
+      }],
+      "children":[]
+    },{
+      "categoryId": "1.2",
+      "name": "Group Revenue",
+      "order": 20,
+      "isLeaf": "true",
+      "parentId": "1",
+      "options": [{
+        "name": "Weddings"
+      },{
+        "name": "Groups"
+      }],
+      "children":[]
+    }]
+  },{
+    "categoryId": "2",
+    "name": "Other Room Revenue",
+    "order": 20,
+    "isLeaf": "false",
+    "parentId": "0",
+    "options": [],
+    "children":[{
+      "categoryId": "2.1",
+      "name": "Resort Fees",
+      "order": 10,
+      "isLeaf": "true",
+      "parentId": "2",
+      "options": [],
+      "children":[]
+    },{
+      "categoryId": "2.2",
+      "name": "Miscellaneous",
+      "order": 20,
+      "isLeaf": "true",
+      "parentId": "2",
+      "options": [],
+      "children":[]
+    }]
+  }]
+}
