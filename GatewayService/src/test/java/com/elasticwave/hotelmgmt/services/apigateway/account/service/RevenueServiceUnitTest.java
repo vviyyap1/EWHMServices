@@ -3,6 +3,7 @@ package com.elasticwave.hotelmgmt.services.apigateway.account.service;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.HotelRevenue;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.RevenueCategory;
+import com.elasticwave.hotelmgmt.services.apigateway.account.domain.RevenueCategoryTree;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -73,10 +74,25 @@ public class RevenueServiceUnitTest {
     public void testSaveDailyHotelRevenue(){
 
         when(restTemplate.postForObject(eq("http://revenuecommandservice/api/account/revenue/saveDailyHotelRevenue"),
-                            any(), eq(String.class)))
-                         .thenReturn("success");
+                any(), eq(String.class)))
+                .thenReturn("success");
         String result = revenueService.saveDailyHotelRevenue(new DailyHotelRevenue());
 
         assertThat(result).isNotNull().isNotEmpty().isEqualTo("success");
+    }
+
+    @Test
+    public void testGetCategories() throws IOException{
+        RevenueCategoryTree categoryTree;
+        ObjectMapper mapper = new ObjectMapper();
+        TypeReference<RevenueCategoryTree> typeReference = new TypeReference<>(){};
+        InputStream inputStream = TypeReference.class.getResourceAsStream("/static/revenuecategoriestree.json");
+        categoryTree = mapper.readValue(inputStream,typeReference);
+
+        when(restTemplate.getForObject(eq("http://revenuequeryservice/api/account/revenue/catgories/1"), any(Class.class))).thenReturn(categoryTree, HttpStatus.OK);
+        RevenueCategoryTree result = revenueService.getCatgories("1");
+
+        assertThat(result).isNotNull().matches(x -> x.getParentId().equals("-1"))
+                .matches(x -> x.getCategoryId().equals("0"));
     }
 }

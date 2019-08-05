@@ -50,6 +50,12 @@ public class RevenueServiceImpl implements RevenueService {
         return new HotelRevenue(hotelId,from,to,dailyHotelRevenues,aggregatedCategoryRevenue, aggregatedCategoryRevenueTree);
     }
 
+    @Override
+    public RevenueCategoryTree getCategories(String hotelId) {
+        List<RevenueCategory> categories = categoryRepository.findAll();
+        return RevenueService.assembleCategoryTree(categories, rootCategoryId);
+    }
+
     /**
      * aggregate Revenues for all categories for all days if multiple days are requested.
      * This is useful to show reports (monthly, yearly or custom time frame)

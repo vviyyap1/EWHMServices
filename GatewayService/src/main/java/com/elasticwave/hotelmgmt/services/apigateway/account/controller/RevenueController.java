@@ -32,6 +32,17 @@ public class RevenueController {
         }
     }
 
+    @GetMapping("/categories/{hotelId}")
+    public Object getHotelRevenue(@PathVariable String hotelId){
+        try {
+            return service.getCatgories(hotelId);
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+
+
     @PostMapping("/saveDailyHotelRevenue")
     public Object saveDailyHotelRevenues(@RequestBody DailyHotelRevenue dailyHotelRevenue) {
         try {

@@ -1,9 +1,6 @@
 package com.elasticwave.hotelmgmt.services.account.revenue.query.controller;
 
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.DailyHotelRevenue;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.HotelRevenue;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategory;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategoryValueTree;
+import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.*;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.DailyHotelRevenueRepository;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.RevenueCategoryRepository;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.service.RevenueService;
@@ -14,19 +11,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -98,5 +91,14 @@ public class RevenueControllerIntegrationTest {
                 .andExpect(jsonPath("hotelId",is("1")))
                 .andExpect(jsonPath("categoriesRevenueTree.revenue",is(1810.0)));
     }
+
+    @Test
+    public void testGetCategories() throws Exception {
+
+        mockMvc.perform(get(basePath + "/categories/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("categoryId",is("0")));
+    }
+
 
 }

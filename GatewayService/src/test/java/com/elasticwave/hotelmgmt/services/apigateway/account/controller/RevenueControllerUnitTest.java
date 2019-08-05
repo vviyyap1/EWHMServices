@@ -2,6 +2,7 @@ package com.elasticwave.hotelmgmt.services.apigateway.account.controller;
 
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.HotelRevenue;
+import com.elasticwave.hotelmgmt.services.apigateway.account.domain.RevenueCategoryTree;
 import com.elasticwave.hotelmgmt.services.apigateway.account.service.RevenueService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -93,5 +94,19 @@ public class RevenueControllerUnitTest {
                         .content(jsonStr))
                 .andExpect(status().isOk())
                 .andDo(print());
+    }
+
+    @Test
+    public void testGetCategories() throws Exception {
+
+        RevenueCategoryTree categoryTree = new RevenueCategoryTree();
+        categoryTree.setCategoryId("0");
+        categoryTree.setParentId("-1");
+
+        when(revenueService.getCatgories(eq("1"))).thenReturn(categoryTree);
+
+        mockMvc.perform(get(basePath + "/categories/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("categoryId",is("0")));
     }
 }

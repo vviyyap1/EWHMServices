@@ -1,8 +1,6 @@
 package com.elasticwave.hotelmgmt.services.account.revenue.query.controller;
 
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.DailyHotelRevenue;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.HotelRevenue;
-import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategoryValueTree;
+import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.*;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.service.RevenueService;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +75,19 @@ public class RevenueControllerUnitTest {
         mockMvc.perform(get(basePath + "//dailyRevenue/1/from/07-28-2019/to/07-29-2019").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("hotelId",is("1")));
+    }
+
+    @Test
+    public void testGetCategories() throws Exception {
+
+        RevenueCategoryTree category = new RevenueCategoryTree();
+        category.setCategoryId("0");
+        category.setParentId("-1");
+
+        when(revenueService.getCategories(any())).thenReturn(category);
+        mockMvc.perform(get(basePath + "/categories/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("categoryId",is("0")));
     }
 
 }

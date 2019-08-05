@@ -36,4 +36,14 @@ public class RevenueController {
             return e.getMessage();
         }
     }
+
+    @GetMapping("/categories/{hotelId}")
+    public Object getCategories(@PathVariable String hotelId){
+        try {
+            return service.getCategories(hotelId);
+        }catch(Exception e){
+            return e.getMessage();
+        }
+    }
+
 }

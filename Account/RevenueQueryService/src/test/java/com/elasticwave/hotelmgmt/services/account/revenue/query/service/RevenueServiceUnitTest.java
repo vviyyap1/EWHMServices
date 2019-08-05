@@ -3,6 +3,7 @@ package com.elasticwave.hotelmgmt.services.account.revenue.query.service;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.HotelRevenue;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategory;
+import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategoryTree;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.DailyHotelRevenueRepository;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.RevenueCategoryRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -65,6 +66,15 @@ public class RevenueServiceUnitTest {
     }
 
     @Test
+    public void testGetCategories() {
+
+        revenueCategoryRepository.findAll();
+        RevenueCategoryTree result = revenueService.getCategories("1");
+        assertThat(result).isNotNull().matches(x -> x.getParentId().equals("-1"))
+        .matches(x -> x.getCategoryId().equals("0"));
+    }
+
+    @Test
     public void testGetRevenue() throws Exception{
         ObjectMapper mapper = new ObjectMapper();
         TypeReference<List<DailyHotelRevenue>> typeReference = new TypeReference<>(){};
@@ -77,7 +87,7 @@ public class RevenueServiceUnitTest {
 
         HotelRevenue result = revenueService.getRevenue("1",from, to);
         assertThat(result).isNotNull().matches(x -> x.getDailyHotelRevenues().size() == 2)
-        .matches(x -> x.getCategoriesRevenueTree().getRevenue().equals(1810.0));
+                .matches(x -> x.getCategoriesRevenueTree().getRevenue().equals(1810.0));
     }
 
 }

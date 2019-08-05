@@ -1,6 +1,7 @@
 package com.elasticwave.hotelmgmt.services.account.revenue.query.service;
 
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.*;
+import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 import java.util.Map;
@@ -12,6 +13,8 @@ public interface RevenueService {
     DailyHotelRevenue getDailyRevenue(String hotelId, Date date);
 
     HotelRevenue getRevenue(String hotelId, Date from, Date to);
+
+    RevenueCategoryTree getCategories(String hotelId);
 
     static RevenueCategoryValueTree assembleTree(final List<RevenueCategory> categories, final List<RevenueCategoryValue> values, final String rootNodeId){
         final List<RevenueCategoryValueTree> valueTree = RevenueService.buildCategoriesValueTreeList(categories,values);
@@ -29,6 +32,30 @@ public interface RevenueService {
                         parentTree.addRevenue(mapTmp,x.getRevenue());
                         parentTree.addChild(x);
                     }
+                });
+
+        return mapTmp.get(rootNodeId);
+    }
+
+    static RevenueCategoryTree assembleCategoryTree(final List<RevenueCategory> categories, final String rootNodeId){
+
+        // Save all nodes to a map
+        final List<RevenueCategoryTree> categoryTreeList = categories.stream()
+                .map(x -> {
+                    RevenueCategoryTree categoryTree = new RevenueCategoryTree();
+                    BeanUtils.copyProperties(x,categoryTree);
+                    return categoryTree;
+                }).collect(Collectors.toList());
+
+        final Map<String,RevenueCategoryTree> mapTmp = categoryTreeList.stream().collect(
+                Collectors.toMap(RevenueCategoryTree::getCategoryId, x -> x));
+
+        // Loop and assign parent/child relationships
+        categoryTreeList.stream()
+                .forEach(x-> {
+                    RevenueCategoryTree parentTree = mapTmp.get(x.getParentId());
+                    if(parentTree!=null)
+                        parentTree.addChild(x);
                 });
 
         return mapTmp.get(rootNodeId);

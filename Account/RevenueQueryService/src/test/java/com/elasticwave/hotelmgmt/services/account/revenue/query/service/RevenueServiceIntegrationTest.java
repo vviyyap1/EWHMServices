@@ -3,6 +3,7 @@ package com.elasticwave.hotelmgmt.services.account.revenue.query.service;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.HotelRevenue;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategory;
+import com.elasticwave.hotelmgmt.services.account.revenue.query.domain.RevenueCategoryTree;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.DailyHotelRevenueRepository;
 import com.elasticwave.hotelmgmt.services.account.revenue.query.repository.RevenueCategoryRepository;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -46,6 +47,15 @@ public class RevenueServiceIntegrationTest {
         revenueCategories = mapper.readValue(inputStream,typeReference);
         revenueCategoryRepository.saveAll(revenueCategories);
     }
+
+    @Test
+    public void testGetCategories(){
+
+        RevenueCategoryTree result = revenueService.getCategories("1");
+        assertThat(result).isNotNull().matches(x -> x.getParentId().equals("-1"))
+                .matches(x -> x.getCategoryId().equals("0"));
+    }
+
     @Test
     public void testGetDailyRevenue() throws Exception{
         ObjectMapper mapper = new ObjectMapper();

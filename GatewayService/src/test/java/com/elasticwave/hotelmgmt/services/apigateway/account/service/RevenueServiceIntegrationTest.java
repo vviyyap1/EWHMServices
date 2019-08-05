@@ -2,12 +2,14 @@ package com.elasticwave.hotelmgmt.services.apigateway.account.service;
 
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.DailyHotelRevenue;
 import com.elasticwave.hotelmgmt.services.apigateway.account.domain.HotelRevenue;
+import com.elasticwave.hotelmgmt.services.apigateway.account.domain.RevenueCategoryTree;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -46,5 +48,14 @@ public class RevenueServiceIntegrationTest {
         String result = revenueService.saveDailyHotelRevenue(dailyHotelRevenue);
 
         assertThat(result).isNotNull().isNotEmpty().isEqualTo("success");
+    }
+
+    @Test
+    public void testGetCategories() {
+
+        RevenueCategoryTree result = revenueService.getCatgories("1");
+
+        assertThat(result).isNotNull().matches(x -> x.getParentId().equals("-1"))
+                .matches(x -> x.getCategoryId().equals("0"));
     }
 }

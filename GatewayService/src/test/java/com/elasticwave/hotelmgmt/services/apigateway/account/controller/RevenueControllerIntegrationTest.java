@@ -68,4 +68,11 @@ public class RevenueControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andDo(print());
     }
+
+    @Test
+    public void testGetCategories() throws Exception {
+        mockMvc.perform(get(basePath + "/categories/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("categoryId",is("0")));
+    }
 }
