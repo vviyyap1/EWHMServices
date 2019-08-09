@@ -34,7 +34,7 @@ public class RevenueServiceUnitTest {
     @MockBean
     private RestTemplate restTemplate;
 
-
+    @MockBean
     private List<RevenueCategory> revenueCategories;
 
 
@@ -89,7 +89,7 @@ public class RevenueServiceUnitTest {
         InputStream inputStream = TypeReference.class.getResourceAsStream("/static/revenuecategoriestree.json");
         categoryTree = mapper.readValue(inputStream,typeReference);
 
-        when(restTemplate.getForObject(eq("http://revenuequeryservice/api/account/revenue/catgories/1"), any(Class.class))).thenReturn(categoryTree, HttpStatus.OK);
+        when(restTemplate.getForObject(eq("http://revenuequeryservice/api/account/revenue/categories/1"), any(Class.class))).thenReturn(categoryTree, HttpStatus.OK);
         RevenueCategoryTree result = revenueService.getCatgories("1");
 
         assertThat(result).isNotNull().matches(x -> x.getParentId().equals("-1"))
