@@ -14,9 +14,10 @@
              }
          }
          stage('build') {
+            /* //to specify a particular agent
             agent {
                node { label 'Mac-agent1' }
-            }
+            } */
             steps{
                  dir(project_path) {
                      sh label: 'maven verify', script: 'mvn clean package'
