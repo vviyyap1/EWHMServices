@@ -13,15 +13,15 @@
                  git 'https://github.com/vviyyap1/EWHMServices.git'
              }
          }
-         agent {
-              node { label 'Mac-agent1' }
-         }
          stage('build') {
-             steps{
+            agent {
+               node { label 'Mac-agent1' }
+            }
+            steps{
                  dir(project_path) {
                      sh label: 'maven verify', script: 'mvn clean package'
                  }
-             }
+            }
          }
          stage('archive') {
              steps{
