@@ -13,7 +13,9 @@
                  git 'https://github.com/vviyyap1/EWHMServices.git'
              }
          }
-
+         agent {
+              node { label 'Mac-agent1' }
+         }
          stage('build') {
              steps{
                  dir(project_path) {
