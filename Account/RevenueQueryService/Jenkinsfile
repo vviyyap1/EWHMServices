@@ -1,0 +1,32 @@
+ pipeline {
+     agent any
+     tools{
+         jdk 'jdk11'
+         maven 'maven3.6.1'
+     }
+     environment{
+         project_path = 'Account/RevenueQueryService'
+     }
+     stages{
+         stage('checkout') {
+             steps{
+                 git 'https://github.com/vviyyap1/EWHMServices.git'
+             }
+         }
+
+         stage('build') {
+             steps{
+                 dir(project_path) {
+                     sh label: 'maven verify', script: 'mvn clean package'
+                 }
+             }
+         }
+         stage('archive') {
+             steps{
+                 jacoco classPattern: '**/target/classes'
+                 junit "${project_path}/target/surefire-reports/TEST-*.xml"
+                 archiveArtifacts "${project_path}/target/*.jar"
+             }
+         }
+     }
+ }
