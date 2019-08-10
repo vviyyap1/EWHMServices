@@ -2,7 +2,7 @@
      agent any
      tools{
          jdk 'jdk11'
-         maven 'maven3.6.1'
+         maven 'maven3.6.'
      }
      environment{
          project_path = 'Account/RevenueQueryService'
