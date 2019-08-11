@@ -1,0 +1,43 @@
+ pipeline {
+     agent any
+     tools{
+         jdk 'jdk11'
+         maven 'maven3.6.1'
+     }
+     environment{
+         project_path = 'GatewayService'
+     }
+     stages{
+         stage('checkout') {
+             steps{
+                 git 'https://github.com/vviyyap1/EWHMServices.git'
+             }
+         }
+         stage('build') {
+            /* //to specify a particular agent
+            agent {
+               node { label 'Mac-agent1' }
+            } */
+            steps{
+                 dir(project_path) {
+                     sh label: 'maven verify', script: 'mvn clean package'
+                 }
+            }
+         }
+         stage('archive') {
+             steps{
+                 jacoco classPattern: '**/target/classes'
+                 junit "${project_path}/target/surefire-reports/TEST-*.xml"
+                 archiveArtifacts "${project_path}/target/*.jar"
+             }
+         }
+
+         /* stage('deploy') {
+              steps{
+                dir(project_path) {
+                     sh label: 'start RevenueQueryService', script: 'java -jar target/RevenueQueryService-0.0.1-SNAPSHOT.jar'
+                }
+              }
+         } */
+     }
+ }
