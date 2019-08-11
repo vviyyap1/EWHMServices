@@ -31,5 +31,13 @@
                  archiveArtifacts "${project_path}/target/*.jar"
              }
          }
+
+         stage('deploy') {
+              steps{
+                dir(project_path) {
+                     sh label: 'start RevenueQueryService', script: 'java -jar target/RevenueQueryService-0.0.1-SNAPSHOT.jar'
+                }
+              }
+         }
      }
  }
